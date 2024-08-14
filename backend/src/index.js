@@ -1,9 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import Database from './config/Database.js';
 import webRoute from './routes/web.js';
 const app = express();
+app.use(express.json());
 dotenv.config();
 
+// connect to database
+new Database();
 
 // register all routes 
 app.use('/', webRoute);

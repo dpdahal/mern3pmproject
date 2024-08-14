@@ -1,15 +1,30 @@
+import User from "../models/User.js";
+
 class UserController{
 
     async index(req, res){
-        return res.send('All Users');
+        try{
+            const users = await User.find({});
+            return res.status(200).json({users: users});
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({error: "Internal Server Error"});
+        }
+        
     }
 
     async show(req, res){
-        return res.send('Show User');
+       
     }
 
     async create(req, res){
-        return res.send('Create User');
+        try{
+           await User.create({...req.body});
+           return res.status(201).json({message: "User created successfully"});
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({error: "Internal Server Error"});
+        }
     }
 
     async update(req, res){
