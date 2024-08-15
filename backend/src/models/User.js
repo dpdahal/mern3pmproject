@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -49,7 +50,13 @@ UserSchema.pre("save", async function(next){
 });
 
 UserSchema.methods.toJSON = function(){
+    console.log(process.env.APP_URL);
     var obj = this.toObject();
+    if(obj.image){
+        obj.image = `${process.env.APP_URL}/users/${obj.image}`;
+    }else{
+        obj.image = `${process.env.APP_URL}/icons/notfound.png`;
+    }
     delete obj.password;
     return obj;
 }

@@ -6,6 +6,8 @@ const app = express();
 app.use(express.json());
 dotenv.config();
 
+// public folder
+app.use(express.static('public'));
 // connect to database
 new Database();
 

@@ -19,7 +19,11 @@ class UserController{
 
     async create(req, res){
         try{
-           await User.create({...req.body});
+            let image ="";
+            if(req.file){
+                image = req.file.filename;
+            }
+           await User.create({...req.body, image: image});
            return res.status(201).json({message: "User created successfully"});
         }catch(err){
             console.log(err);
