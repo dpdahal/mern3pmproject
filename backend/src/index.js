@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import Database from './config/Database.js';
+import DatabaseTableSeeder from './seeder/DatabaseTableSeeder.js';
 import webRoute from './routes/web.js';
 const app = express();
 app.use(express.json());
@@ -10,6 +11,8 @@ dotenv.config();
 app.use(express.static('public'));
 // connect to database
 new Database();
+// run database seeder
+DatabaseTableSeeder.run();
 
 // register all routes 
 app.use('/', webRoute);

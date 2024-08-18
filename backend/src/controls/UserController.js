@@ -1,6 +1,8 @@
+import fs from "fs";
 import User from "../models/User.js";
 
 class UserController{
+
 
     async index(req, res){
         try{
@@ -10,10 +12,22 @@ class UserController{
             console.log(err);
             return res.status(500).json({error: "Internal Server Error"});
         }
-        
     }
 
     async show(req, res){
+        try{
+            let id = req.params.id;
+            const user = await User.findById(id);
+            if(user){
+                return res.status(200).json({user: user});
+            }else{
+                return res.status(404).json({error: "User not found"});
+            }
+
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({error: "Internal Server Error"});
+        }
        
     }
 
@@ -36,7 +50,24 @@ class UserController{
     }
 
     async delete(req, res){
-        return res.send('Delete User');
+        let findData = await User.findById(req.params.id);
+        if(findData){
+            if(findData.image){
+                fs.unlink(`./public/users/${findData.image}`, async (err) => {
+                    if(err){
+                        console.log(err);
+                    }
+                    await User.findByIdAndDelete(req.params.id);
+                    return res.status(200).json({message: "User deleted successfully"});
+                });
+            }else{
+                await User.findByIdAndDelete(req.params.id);
+                return res.status(200).json({message: "User deleted successfully"});
+            }
+
+        }else{
+            return res.status(404).json({error: "User not found"});
+        } 
     }
 
 }
