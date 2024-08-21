@@ -1,5 +1,6 @@
 import multer from 'multer';
 import  fs from 'fs';
+import path from 'path';
 
 class UploadMiddleware{
     folder_exists(folder){
@@ -23,7 +24,22 @@ class UploadMiddleware{
                 cb(null, imageName)
             }
         });
-        return multer({storage: this.storage});
+        const fileFilter = (req, file, cb) => {
+            const filetypes = /jpeg|jpg|png|gif/;
+            const mimetype = filetypes.test(file.mimetype);
+            const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+            if (mimetype && extname) {
+                return cb(null, true);
+            } else {
+                cb(new Error('Invalid file type. Only JPEG, JPG, PNG, and GIF files are allowed!'));
+            }
+        };
+        return multer({
+            storage: this.storage,
+            fileFilter: fileFilter,
+            limits: { fileSize: 10 * 1024 * 1024 } // Optional: Limit the file size to 10MB
+        });
     }
 
 }
