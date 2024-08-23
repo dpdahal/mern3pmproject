@@ -1,11 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import Database from './config/Database.js';
 import DatabaseTableSeeder from './seeder/DatabaseTableSeeder.js';
 import webRoute from './routes/web.js';
 const app = express();
 app.use(express.json());
 dotenv.config();
+app.use(cors());
 
 // public folder
 app.use(express.static('public'));

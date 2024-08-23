@@ -20,6 +20,9 @@ function HeaderComponent() {
               <li className="nav-item">
                 <Link className="nav-link" to="/news">News</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">Register</Link>
+              </li>
              
           
             </ul>
