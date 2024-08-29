@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function HeaderComponent() {
+  const isLogIn=localStorage.getItem('token') ?? false;
   return (
     <div className='container'>
         <div className="row">
@@ -20,12 +21,20 @@ function HeaderComponent() {
               <li className="nav-item">
                 <Link className="nav-link" to="/news">News</Link>
               </li>
+              
+              {isLogIn ? (<div>
+                <li className="nav-item">
+                <Link className="nav-link" to="/admin">Dashboard</Link>
+              </li>
+              </div>) : <React.Fragment>
+                
               <li className="nav-item">
                 <Link className="nav-link" to="/login">Login</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/register">Register</Link>
               </li>
+                </React.Fragment>}
              
           
             </ul>

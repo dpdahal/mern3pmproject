@@ -6,6 +6,12 @@ import UserRegisterComponent from '../components/pages/auth/UserRegisterComponen
 import LoginComponent from '../components/pages/auth/LoginComponent'
 import AdminRouteMiddelware from '../middleware/AdminRouteMiddelware'
 import DashboardComponent from '../admin/DashboardComponent'
+import UserComponents from '../admin/UserComponents'
+import AddNewsComponent from '../admin/AddNewsComponent'
+import ShowNewsComponent from '../admin/ShowNewsComponent'
+import CategoryComponent from '../admin/CategoryComponent'
+import ProfileComponent from '../admin/ProfileComponent'
+import SettingComponent from '../admin/SettingComponent'
 
 function RouterComponent() {
   return (
@@ -18,6 +24,12 @@ function RouterComponent() {
 
             <Route path="/admin" element={<AdminRouteMiddelware />}> 
                 <Route path="/admin" element={<DashboardComponent />} />
+                <Route path="profile" element={<ProfileComponent />} />
+                <Route path="setting" element={<SettingComponent />} />
+                <Route path="users" element={<UserComponents/>} />
+                <Route path="manage-category" element={<CategoryComponent/>} />
+                <Route path="add-news" element={<AddNewsComponent/>} />
+                <Route path="show-news" element={<ShowNewsComponent/>} />
 
             </Route>
 

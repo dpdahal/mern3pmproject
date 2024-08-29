@@ -2,8 +2,16 @@ import React from 'react'
 
 export default function DashboardComponent() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+    <React.Fragment>
+      <div className='card'>
+        <div className='card-header'>
+          <h4>Dashboard</h4>
+        </div>
+        <div className='card-body'>
+          <h1>Welcome to Admin Dashboard</h1>
+        </div>
+      </div>
+     
+    </React.Fragment>
   )
 }
