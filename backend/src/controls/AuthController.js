@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import TokenVerify from "../middleware/TokenVerify.js";
 
 class AuthController{
 
@@ -19,6 +20,22 @@ class AuthController{
                 }
             }
 
+        }catch(e){
+            console.log(e);
+            res.status(500).json({message: e.message});
+        }
+    }
+
+    async verify_token(req, res){
+        try{
+            TokenVerify.verifyToken(req, res,async () => {
+                let userId = req.user.id;
+                let user =await User.findById(userId);
+                if(!user){
+                    return res.status(404).json({message: 'User not found'});
+                }
+                return res.status(200).json({message: 'Token is valid', user: user});
+            });
         }catch(e){
             console.log(e);
             res.status(500).json({message: e.message});

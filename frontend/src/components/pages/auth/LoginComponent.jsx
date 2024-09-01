@@ -2,8 +2,7 @@ import React from 'react';
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import axios from 'axios'
+import { useLoginUserMutation } from '../../../store/slice/AuthSlice';
 import HeaderComponent from '../../layouts/HeaderComponent'
 
 let loginSchema = yup.object().shape({
@@ -16,16 +15,22 @@ function LoginComponent() {
         resolver: yupResolver(loginSchema)
     });
 
+    const [loginUser] = useLoginUserMutation();
+
     const login = async (data) => {
-
-        axios.post("http://localhost:5000/auth", data).then((response) => {
-            let token = response.data.token;
-            localStorage.setItem('token', token);
-            window.location.href = '/admin';
-        }).catch((err) => {
-            console.log(err);
-        });
-
+        try {
+            const response = await loginUser(data);
+            if(response.error){
+                setError('email', {message: response.error.data.message});
+            }else{
+                console.log(response.data);
+                localStorage.setItem('token', response.data.token);
+                window.location.href = '/admin';
+            }
+            
+        } catch (error) {
+            console.log(error.data);
+        }
     }
     return (
         <div className='container'>
