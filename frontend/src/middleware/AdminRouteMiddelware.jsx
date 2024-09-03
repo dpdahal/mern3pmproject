@@ -13,7 +13,6 @@ export default function AdminRouteMiddelware() {
         window.location.href = '/login';
     }
 
-    console.log(data);
 
     if(isLoading){
         return <div>Loading...</div>
