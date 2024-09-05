@@ -1,8 +1,9 @@
 import express from 'express';
 import userRoute from './user.js';
-import newsRoute from './news.js';
 import authRoute from './auth.js';
 import catRoute from './category.js';
+import newsRoute from './news.js';
+
 const webRoute = express.Router();
 
 

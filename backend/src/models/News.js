@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const NewsSchema = new mongoose.Schema({
-    category:{
+    categoryId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Category",
         required:true
