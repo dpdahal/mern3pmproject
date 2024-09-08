@@ -1,11 +1,22 @@
 import News from "../models/News.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 class NewsController {
 
     async index(req, res) {
         try {
-            const news = await News.find({});
-            res.json(news);
+            const newsData = await News.find({}).populate("categoryId");
+            newsData.forEach(news => {
+                if(news.image){
+                news.image = `${process.env.APP_URL}/news/${news.image}`;
+                }else{
+                    news.image = `${process.env.APP_URL}/icons/news-image-not-found.png`;
+                }
+            });
+            
+            res.json(newsData);
         } catch (err) {
             console.log(err);
             res.status(500).json({ error: "Internal Server Error" });
@@ -60,6 +71,22 @@ class NewsController {
         } catch (err) {
             console.log(err);
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+
+    async showBySlug(req, res) {
+        try {
+            const news = await News.findOne({slug: req.params.slug}).populate("categoryId");
+            console.log(news);
+            if(news.image){
+                news.image = `${process.env.APP_URL}/news/${news.image}`;
+            }else{
+                news.image = `${process.env.APP_URL}/icons/news-image-not-found.png`;
+            }
+            res.json(news);
+        }catch(err){
+            console.log(err);
+            res.status(500).json({error: "Internal Server Error"});
         }
     }
 

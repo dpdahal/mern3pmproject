@@ -12,5 +12,6 @@ newsRoute.post('/',upload.single('image'), nInstance.store);
 newsRoute.get('/:id', nInstance.show);
 newsRoute.put('/:id', nInstance.update);
 newsRoute.delete('/:id', nInstance.destroy);
+newsRoute.get('/news-details/:slug', nInstance.showBySlug);
 
 export default newsRoute;

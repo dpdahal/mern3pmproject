@@ -12,6 +12,7 @@ import ShowNewsComponent from '../admin/ShowNewsComponent'
 import CategoryComponent from '../admin/CategoryComponent'
 import ProfileComponent from '../admin/ProfileComponent'
 import SettingComponent from '../admin/SettingComponent'
+import NewsDetailsComponent from '../components/pages/news/NewsDetailsComponent'
 
 function RouterComponent() {
   return (
@@ -21,6 +22,8 @@ function RouterComponent() {
             <Route path="/news" element={<NewsComponent />} />
             <Route path="/login" element={<LoginComponent />} />
             <Route path="/register" element={<UserRegisterComponent />} />
+            <Route path="/news/" element={<NewsComponent />} />
+            <Route path="/news-details/:slug" element={<NewsDetailsComponent />} />
 
             <Route path="/admin" element={<AdminRouteMiddelware />}> 
                 <Route path="/admin" element={<DashboardComponent />} />

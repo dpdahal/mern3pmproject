@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 const NewsSchema = new mongoose.Schema({
     categoryId:{
@@ -24,6 +25,11 @@ const NewsSchema = new mongoose.Schema({
     
 },{
     versionKey:false
+});
+
+NewsSchema.pre("validate", function(next){
+    this.slug = slugify(this.slug, {lower:true, strict:true});
+    next();
 });
 
 export default mongoose.model("News", NewsSchema);

@@ -43,6 +43,12 @@ export const newsSlice = createApi({
             }),
             invalidatesTags: ['News'],
         }),
+        getNewsBySlug: builder.query({
+            query: (slug) => `/news/news-details/${slug}`,
+            providesTags: ['News'],
+        }),
+
+
 
 
     }),
@@ -54,6 +60,7 @@ export const {
     useStoreNewsMutation,
     useShowNewsQuery,
     useUpdateNewsMutation,
-    useDeleteNewsMutation   
+    useDeleteNewsMutation,
+    useGetNewsBySlugQuery
 
 } = newsSlice;
