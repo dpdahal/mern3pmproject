@@ -19,7 +19,7 @@ export const authSlice = createApi({
             url: '/auth/verify',
             method: 'GET',
             headers: {
-              'authorization': `Bearer ${token}`
+              'authorization': token
             }
         })
       }),

@@ -6,6 +6,7 @@ class UserController{
 
     async index(req, res){
         try{
+            
             const users = await User.find({});
             return res.status(200).json({users: users});
         }catch(err){

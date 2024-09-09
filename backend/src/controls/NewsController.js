@@ -1,5 +1,6 @@
 import News from "../models/News.js";
 import dotenv from "dotenv";
+import fs from "fs";
 
 dotenv.config();
 
@@ -30,11 +31,11 @@ class NewsController {
                 image = req.file.filename;
             }
             await News.create({...req.body, image: image});
-            res.json({message: "News created successfully"});
+            res.status(201).json({message: "News created successfully", status: true});
         
         }catch(err){
             console.log(err);
-            res.status(500).json({error: "Internal Server Error"});
+            res.status(500).json({error: "Internal Server Error", status: false});
         }
     }
 
@@ -65,13 +66,24 @@ class NewsController {
     }
 
     async destroy(req, res) {
-        try {
-            await News.findByIdAndDelete(req.params.id);
-            res.json({message: "News deleted successfully"});
-        } catch (err) {
-            console.log(err);
-            res.status(500).json({ error: "Internal Server Error" });
-        }
+        let findData = await News.findById(req.params.id);
+        if(findData){
+            if(findData.image){
+                fs.unlink(`./public/news/${findData.image}`, async (err) => {
+                    if(err){
+                        console.log(err);
+                    }
+                    await News.findByIdAndDelete(req.params.id);
+                    return res.status(200).json({message: "News deleted successfully"});
+                });
+            }else{
+                await News.findByIdAndDelete(req.params.id);
+                return res.status(200).json({message: "News deleted successfully"});
+            }
+
+        }else{
+            return res.status(404).json({error: "News not found"});
+        } 
     }
 
     async showBySlug(req, res) {

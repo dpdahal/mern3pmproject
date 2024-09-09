@@ -3,6 +3,8 @@ import React,{useState} from 'react';
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from 'sweetalert2'
+
 
 import { useGetCategroyQuery } from '../store/slice/CategorySlice';
 import { useStoreNewsMutation } from '../store/slice/NewsSlice';
@@ -39,8 +41,14 @@ function AddNewsComponent() {
       if (response.error) {
         setError('title', { message: response.error.data.message });
       } else {
-        console.log(response.data);
-        reset();
+        if(response.data.status){
+          reset();
+          Swal.fire({
+            title: response.data.message,
+            icon: 'success',
+            timer: 2000
+          })
+        }
       }
     })
 
