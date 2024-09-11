@@ -5,21 +5,20 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from 'sweetalert2'
 
-
 import { useGetCategroyQuery } from '../store/slice/CategorySlice';
 import { useStoreNewsMutation } from '../store/slice/NewsSlice';
+import CkeditroComponent from '../editor/CkeditroComponent';
 
 
 let newsCreateSchema = yup.object().shape({
   categoryId: yup.string().required(),
   title: yup.string().required(),
   slug: yup.string().required(),
-  description: yup.string().required(),
 });
 
 
-function AddNewsComponent() {
-
+function AddNewsComponent(props) {
+  const [editor, setEditor] = useState(null);
   const { setError, reset, register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(newsCreateSchema)
   });
@@ -34,7 +33,7 @@ function AddNewsComponent() {
     formData.append('categoryId', data.categoryId);
     formData.append('title', data.title);
     formData.append('slug', data.slug);
-    formData.append('description', data.description);
+    formData.append('description', editor);
     formData.append('image', image);
 
     storeNews(formData).then((response) => {
@@ -95,9 +94,7 @@ function AddNewsComponent() {
               <label htmlFor="description">Description:
                 {errors.description?.message && <span className='text-danger'>{errors.description?.message}</span>}
               </label>
-              <textarea
-                {...register('description')}
-                className='form-control' />
+              <CkeditroComponent handleChange={(data) => {setEditor(data); }}data={editor} {...props} />
             </div>
 
             <div className="form-group mb-3">

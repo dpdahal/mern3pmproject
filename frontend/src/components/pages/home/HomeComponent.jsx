@@ -11,6 +11,11 @@ function HomeComponent() {
         return text.substring(0, 100) + '...';
     }
 
+    
+    const limitDescription = (description) => {
+        return description.substring(0, 100) + "..."
+    }
+
     return (
         <div className='container'>
             <div className="row">
@@ -29,7 +34,10 @@ function HomeComponent() {
                             <img src={news.image} style={{height:"200px"}} className="card-img-top" alt={news.title} />
                             <div className="card-body">
                                 <h5 className="card-title">{news.title}</h5>
-                                <p className="card-text">{getLimit(news.description)}</p>
+                                <p className="card-text"
+                                    dangerouslySetInnerHTML={{ __html: limitDescription(news.description)
+                                                        }}
+                                                    />
                                 <Link to={`/news-details/${news.slug}`} className="btn btn-primary">Read more</Link>
                             </div>
                         </div>
