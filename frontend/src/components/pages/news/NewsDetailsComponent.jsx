@@ -5,9 +5,7 @@ import { useParams } from 'react-router-dom';
 
 function NewsDetailsComponent() {
     const { slug } = useParams();
-
     const { data, error, isLoading } = useGetNewsBySlugQuery(slug);
-
 
     return (
         <div className='container'>
