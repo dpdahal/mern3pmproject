@@ -48,7 +48,7 @@ export const newsSlice = createApi({
             providesTags: ['News'],
         }),
 
-
+        
 
 
     }),
@@ -61,6 +61,6 @@ export const {
     useShowNewsQuery,
     useUpdateNewsMutation,
     useDeleteNewsMutation,
-    useGetNewsBySlugQuery
+    useGetNewsBySlugQuery,
 
 } = newsSlice;

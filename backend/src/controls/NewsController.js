@@ -89,7 +89,8 @@ class NewsController {
     async showBySlug(req, res) {
         try {
             const news = await News.findOne({slug: req.params.slug}).populate("categoryId");
-            console.log(news);
+            news.page_views += 1;
+            await news.save();
             if(news.image){
                 news.image = `${process.env.APP_URL}/news/${news.image}`;
             }else{
@@ -100,6 +101,19 @@ class NewsController {
             console.log(err);
             res.status(500).json({error: "Internal Server Error"});
         }
+    }
+
+    async search(req, res) {
+        try{
+            let search = req.params.search;
+            const newsData = await News.find({title: {$regex: search, $options: 'i'}});
+            return res.json(newsData);
+
+        }catch(err){
+            console.log(err);
+            res.status(500).json({error: "Internal Server Error"});
+        }
+
     }
 
 }

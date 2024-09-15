@@ -22,6 +22,10 @@ const NewsSchema = new mongoose.Schema({
     description:{
         type:String,
     },
+    page_views:{
+        type:Number,
+        default:0
+    },
     
 },{
     versionKey:false

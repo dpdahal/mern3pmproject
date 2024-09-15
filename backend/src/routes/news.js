@@ -13,5 +13,6 @@ newsRoute.get('/:id', nInstance.show);
 newsRoute.put('/:id', nInstance.update);
 newsRoute.delete('/:id', nInstance.destroy);
 newsRoute.get('/news-details/:slug', nInstance.showBySlug);
+newsRoute.get('/search/:search', nInstance.search);
 
 export default newsRoute;

@@ -19,6 +19,10 @@ function NewsDetailsComponent() {
                     <div>
                         <img src={data.image} alt={data.title} style={{width: "100%"}} />
                         <h3>{data.title}</h3>
+                        <p>Total Views :
+
+                            {data.page_views}
+                        </p>
                         <p className="card-text"
                                     dangerouslySetInnerHTML={{ __html:(data.description)
                                                         }}
